@@ -37,5 +37,8 @@
     "reset-css": "^5.0.1",
     "superjson": "^1.9.1",
     "swr": "^1.1.1"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
