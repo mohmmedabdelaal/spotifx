@@ -1,8 +1,6 @@
 import {PrismaClient} from '@prisma/client'
 import bcrypt from 'bcrypt'
 import {artistsData} from "./SongsData";
-import {Prosto_One} from "@next/font/google";
-
 const prisma = new PrismaClient();
 
 const run = async () => {
