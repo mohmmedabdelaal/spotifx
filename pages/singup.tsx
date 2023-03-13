@@ -3,7 +3,7 @@ import AuthForm from "../components/AuthForm";
 const Singup = () => {
     return (
         <div>
-            <AuthForm mode='singup'/>
+            <AuthForm mode='signup'/>
         </div>
     );
 };

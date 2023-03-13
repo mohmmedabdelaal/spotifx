@@ -1,31 +1,35 @@
-import jwt from 'jsonwebtoken';
-import prisma from './prisma';
-import {NextApiRequest, NextApiResponse} from "next";
+import jwt from "jsonwebtoken";
+import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "./prisma";
 
-export const validateUser = (handler) =>{
-    return async (req:NextApiRequest,res:NextApiResponse) =>{
-        const token = req.cookies.SpotifyMirror;
+export const validateRoute = (handler) => {
+    return async (req: NextApiRequest, res: NextApiResponse) => {
+        const token = req.cookies.TRAX_ACCESS_TOKEN;
 
-        if(token) {
+        if (token) {
             let user;
+
             try {
-            const {id} = await jwt.verify(token,'ok');
-            user = await prisma.user.findUnique({
-                where: {id}
-            });
-            if(!user) {
-                throw new Error('Can not find user')
-            }
-            }catch (e) {
-                console.error(e)
+                const { id } = jwt.verify(token, "hello");
+                user = await prisma.user.findUnique({
+                    where: { id },
+                });
+                if (!user) {
+                    throw new Error("Not real user");
+                }
+            } catch (error) {
+                console.error(error);
                 res.status(401);
-                res.json({error: 'User not found'})
-                return
+                res.json({ error: "Not Authorizied" });
+                return;
             }
 
-            return handler(req,res,user);
+            return handler(req, res, user);
         }
-        res.status(401)
-        res.json({error: 'User not found'});
-    }
-}
+
+        res.status(401);
+        res.json({ error: "Not Authorizied | No token" });
+    };
+};
+
+export const validateToken = (token) => jwt.verify(token, "hello");

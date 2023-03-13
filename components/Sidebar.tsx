@@ -13,6 +13,7 @@ import {
 import {MdHome, MdSearch, MdLibraryMusic, MdFavorite, MdPlaylistAdd} from 'react-icons/md'
 import NextImage from 'next/image'
 import NextLink from 'next/link'
+import {usePlaylist} from "../lib/hooks";
 
 
 const navItems = [{
@@ -43,10 +44,15 @@ const menuItems = [{
         route: '/favorite'
     },
 ]
-const cPlaylist = new Array(50).fill(2).map((_,i) => `Playlist ${i + 1}`);
+// const playlists = new Array(50).fill(2).map((_,i) => `Playlist ${i + 1}`);
 
 
 const Sidebar = () => {
+    const {playlists} =  usePlaylist()
+    console.log(playlists);
+
+
+
     return (
         <Box width="100%" height="calc(100vh - 100px)" bg="black" color="gray.600" paddingX="10px"  >
             <Box paddingY="20px" height="100%">
@@ -82,15 +88,19 @@ const Sidebar = () => {
                     </List>
             </Box>
                 <Divider color="gray.800" />
-
-                <Box height="66%" overflowY="auto" paddingY="20px" >
+                <Box height="66%" overflowY="auto" paddingY="20px">
                     <List spacing={2}>
-                        {cPlaylist.map(playlist =>(
-                            <ListItem paddingX="20px" fontSize="1.2" key={playlist}>
+                        {playlists.length === 0 ? null : playlists.map((playlist) => (
+                            <ListItem paddingX="20px" key={playlist.id}>
                                 <LinkBox>
-                                <NextLink href='/'>
-                                    {playlist}
-                                </NextLink>
+                                    <NextLink
+                                        href={{
+                                            pathname: "/playlist/[id]",
+                                            query: { id: playlist.id },
+                                        }}
+                                    >
+                                        <LinkOverlay>{playlist.name}</LinkOverlay>
+                                    </NextLink>
                                 </LinkBox>
                             </ListItem>
                         ))}
