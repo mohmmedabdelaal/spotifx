@@ -1,7 +1,9 @@
 import {ChakraProvider,extendTheme} from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
+import {StoreProvider} from 'easy-peasy'
 import  'reset-css';
 import Player from "../components/Player";
+import store from "../lib/store";
 
 
 const theme = extendTheme({
@@ -34,11 +36,12 @@ const theme = extendTheme({
 
 export default function App({ Component, pageProps }) {
   return <ChakraProvider theme={theme}>
+    <StoreProvider store={store}>
     {Component.authPage ? (<Component {...pageProps} />) : (
         <Player>
         <Component {...pageProps} />
         </Player>
     )}
-
+    </StoreProvider>
   </ChakraProvider>
 }

@@ -3,9 +3,11 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
+import {string} from "prop-types";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const { email, password } = req.body;
+    if (typeof email !== 'string') return res.status(404).send('invalid email')
 
     const user = await prisma.user.findUnique({
         where: { email },

@@ -6,7 +6,7 @@ import {FC ,useState} from 'react'
 import {auth} from '../lib/mutation';
 
 
-const AuthForm: FC<{mode: "signin"| "singup"}>  = ({mode}) => {
+const AuthForm: FC<{mode: "signin"| "signup"}>  = ({mode}) => {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('');
     const [loading,setLoading] = useState(false);

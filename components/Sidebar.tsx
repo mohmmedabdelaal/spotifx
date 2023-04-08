@@ -49,8 +49,6 @@ const menuItems = [{
 
 const Sidebar = () => {
     const {playlists} =  usePlaylist()
-    console.log(playlists);
-
 
 
     return (
@@ -90,7 +88,7 @@ const Sidebar = () => {
                 <Divider color="gray.800" />
                 <Box height="66%" overflowY="auto" paddingY="20px">
                     <List spacing={2}>
-                        {playlists.length === 0 ? null : playlists.map((playlist) => (
+                        {Array.isArray(playlists) ? playlists.map((playlist) => (
                             <ListItem paddingX="20px" key={playlist.id}>
                                 <LinkBox>
                                     <NextLink
@@ -103,7 +101,7 @@ const Sidebar = () => {
                                     </NextLink>
                                 </LinkBox>
                             </ListItem>
-                        ))}
+                        )) : <div>No playlist</div>}
                     </List>
                 </Box>
                 </Box>
